@@ -125,7 +125,7 @@
             android:id="@+id/video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/video_off"
+            android:src="@drawable/videocam_off_new"
             android:background="@color/black"
             android:layout_weight="25"/>
 
@@ -150,9 +150,10 @@
             android:id="@+id/exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/call_end"
+            android:src="@drawable/end_call"
             android:background="@color/red"
-            android:layout_weight="25" />
+            android:layout_weight="25"
+            android:backgroundTint="#000000"/>
 
     </LinearLayout>
 

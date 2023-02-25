@@ -7,17 +7,21 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -40,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     List<Contact> contactList = new ArrayList<>();
-    List<View> views = new ArrayList<>();
+    List<View> views;
+    List<Drawable> drawableList;
 
     @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
@@ -71,17 +76,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout container2 = findViewById(R.id.container1_gridview2);
 
 
-        Contact contact1 = new Contact(R.drawable.legolas, "You", R.drawable.top_background);
+        Contact contact1 = new Contact(R.drawable.legolas, "You", R.drawable.top_background, 0);
         Contact contact2 = new Contact(R.drawable.colors_palette_circle,
                 "Long Contact For Test and Test and Again and Again and Again and One More Time",
-                R.drawable.bottom_background);
+                R.drawable.bottom_background, 1);
         contactList.add(contact1);
         contactList.add(contact2);
 
+        views = new ArrayList<>();
         views.add(imageView1); //0
         views.add(textView1); //1
         views.add(imageView2); //2
         views.add(textView2); //3
+
+        drawableList = new ArrayList<>();
+        Drawable videoOff = ContextCompat.getDrawable(this, R.drawable.videocam_off_new);
+        Drawable videoOn = ContextCompat.getDrawable(this, R.drawable.videocam_on_new);
+        Drawable micOff = ContextCompat.getDrawable(this, R.drawable.mic_off);
+        Drawable micOn = ContextCompat.getDrawable(this, R.drawable.mic_on);
+        drawableList.add(videoOff); //0
+        drawableList.add(videoOff); //1
+        drawableList.add(micOff); //2
+        drawableList.add(micOff); //3
+
 
         update(contactList, views);
 
@@ -97,13 +114,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        String[] names = {"You", data.getStringExtra("name")};
-                        int[] images = {R.drawable.cheburashka, data.getIntExtra("image",
-                                R.drawable.walter_white_20)};
+                        String name = data.getStringExtra("name");
+                        int image = data.getIntExtra("image", R.drawable.profile);
 
-                        contact2.setImage(images[1]);
-                        contact2.setName(names[1]);
-                        contactList.set(1, contact2);
+                        for (int i = 0; i < contactList.size(); ++i) {
+                            Contact contact = contactList.get(i);
+                            if (contact.getId() == 1) {
+                                contact.setImage(image);
+                                contact.setName(name);
+                                contactList.set(i, contact);
+                                break;
+                            }
+                        }
                         views = update(contactList, views);
                     }
                 });
@@ -127,23 +149,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.video:
-                ImageView video = findViewById(R.id.video);
-                if (video.getDrawable().getConstantState() == getDrawable(R.drawable.video_off)
-                        .getConstantState()) {
-                    video.setImageResource(R.drawable.video_on);
+                ImageView video = (ImageView) findViewById(R.id.video);
+                if (drawableList.get(1).getConstantState() == drawableList.get(0).getConstantState()) {
+                    video.setImageResource(R.drawable.videocam_on_new);
                     Log.d("MYTAG", "Video turned ON");
+                    drawableList.set(1, ContextCompat.getDrawable(this, R.drawable.videocam_on_new));
                 } else {
-                    video.setImageResource(R.drawable.video_off);
+                    video.setImageResource(R.drawable.videocam_off_new);
                     Log.d("MYTAG", "Video turned OFF");
+                    drawableList.set(1, drawableList.get(0));
                 }
                 break;
             case R.id.mic:
-                ImageView mic = findViewById(R.id.mic);
-                if (mic.getDrawable().getConstantState() == getDrawable(R.drawable.mic_off)
-                        .getConstantState()) {
+                int index = 0;
+                for (int k = 0; k < contactList.size(); ++k) {
+                    Contact contact = contactList.get(k);
+                    if (contact.getId() == 0) {
+                        index = k;
+                        break;
+                    }
+                }
+
+                ImageView mic = (ImageView) findViewById(R.id.mic);
+                TextView textView;
+                if (index == 0) {
+                    textView = findViewById(R.id.gridview_text);
+                } else {
+                    textView = findViewById(R.id.gridview_text2);
+                }
+
+
+                if (drawableList.get(3).getConstantState() == drawableList.get(2).getConstantState()) {
                     mic.setImageResource(R.drawable.mic_on);
+                    drawableList.set(3, ContextCompat.getDrawable(this, R.drawable.mic_on));
+                    textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                            R.drawable.baseline_mic_24, 0);
                 } else {
                     mic.setImageResource(R.drawable.mic_off);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                            R.drawable.baseline_mic_off_24, 0);
+                    drawableList.set(3, drawableList.get(2));
                 }
                 break;
             case R.id.alert:

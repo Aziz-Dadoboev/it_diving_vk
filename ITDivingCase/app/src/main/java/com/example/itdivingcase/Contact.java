@@ -8,11 +8,13 @@ public class Contact {
     int image;
     String name;
     int backGroundColor;
+    int id;
 
-    public Contact(int image, String name, int backGroundColor) {
+    public Contact(int image, String name, int backGroundColor, int id) {
         this.image = image;
         this.name = name;
         this.backGroundColor = backGroundColor;
+        this.id = id;
     }
 
     public int getImage() {
@@ -37,5 +39,13 @@ public class Contact {
 
     public void setBackGroundColor(int backGroundColor) {
         this.backGroundColor = backGroundColor;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
