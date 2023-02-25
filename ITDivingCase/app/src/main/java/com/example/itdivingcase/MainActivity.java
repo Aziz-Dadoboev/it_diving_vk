@@ -1,43 +1,25 @@
 package com.example.itdivingcase;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -86,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         views.add(textView2); //3
 
         drawableList = new ArrayList<>();
-        Drawable videoOff = ContextCompat.getDrawable(this, R.drawable.videocam_off_new);
+        Drawable videoOff = ContextCompat.getDrawable(this, R.drawable.camera_off);
         Drawable micOff = ContextCompat.getDrawable(this, R.drawable.mic_off);
         drawableList.add(videoOff); //0
         drawableList.add(videoOff); //1
@@ -144,11 +126,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.video:
                 ImageView video = (ImageView) findViewById(R.id.video);
                 if (drawableList.get(1).getConstantState() == drawableList.get(0).getConstantState()) {
-                    video.setImageResource(R.drawable.videocam_on_new);
+                    video.setImageResource(R.drawable.camera_on);
                     Log.d("MYTAG", "Video turned ON");
-                    drawableList.set(1, ContextCompat.getDrawable(this, R.drawable.videocam_on_new));
+                    drawableList.set(1, ContextCompat.getDrawable(this, R.drawable.camera_on));
                 } else {
-                    video.setImageResource(R.drawable.videocam_off_new);
+                    video.setImageResource(R.drawable.camera_off);
                     Log.d("MYTAG", "Video turned OFF");
                     drawableList.set(1, drawableList.get(0));
                 }
