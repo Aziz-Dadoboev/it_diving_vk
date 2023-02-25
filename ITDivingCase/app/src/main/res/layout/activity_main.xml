@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:weightSum="100">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,38 +24,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/message_icon"
-            android:layout_weight="1"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/messages_icon_desc"
+            android:layout_marginLeft="5dp"/>
 
         <ImageView
             android:id="@+id/group_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/group_icon_new"
-            android:layout_weight="1"/>
+            app:layout_constraintStart_toEndOf="@+id/messages_icon"
+            app:layout_constraintEnd_toStartOf="@+id/shelf_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/group_icon_desc" />
 
         <ImageView
             android:id="@+id/shelf_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:rotationY="2"
-            android:src="@drawable/outline_table_rows_24" />
+            android:src="@drawable/outline_table_rows_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/shelf_icon_desc"
+            android:layout_marginRight="5dp"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="15"
-        android:orientation="vertical"
-        android:weightSum="2">
+        android:layout_weight="15">
 
-        <LinearLayout
-            android:layout_marginBottom="5dp"
+        <View android:id="@+id/strut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container1_gridview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/strut"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/top_background"
             android:orientation="vertical">
 
@@ -63,8 +82,12 @@
                 android:id="@+id/gridview_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:contentDescription="@string/gridview_image_desc"
+                app:layout_constraintBottom_toTopOf="@+id/gridview_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/legolas" />
 
             <TextView
@@ -72,29 +95,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
-                app:drawableEndCompat="@drawable/baseline_mic_off_24"
-                tools:text="TextView"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/contact_name_text_size"
+                app:drawableEndCompat="@drawable/baseline_mic_off_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="You" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container1_gridview2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/bottom_background">
+            android:background="@drawable/bottom_background"
+            android:layout_alignTop="@+id/strut"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_for_contact_containers"
+            android:layout_marginEnd="@dimen/margin_for_contact_containers">
 
             <ImageView
                 android:id="@+id/gridview_image2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/profile" />
+                app:srcCompat="@drawable/colors_palette_circle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/gridview_text2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/gridview_image_desc"/>
 
             <TextView
                 android:id="@+id/gridview_text2"
@@ -103,31 +137,36 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 app:drawableEndCompat="@drawable/baseline_mic_off_24"
-                tools:text="TextView"
+                tools:text="Long Contact For Test and Test and Again and Again and Again and One More Time"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="@dimen/contact_name_text_size"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_weight="40"
-        android:paddingTop="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:padding="24dp">
 
         <ImageView
             android:id="@+id/video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/videocam_off_new"
+            android:src="@drawable/camera_off"
             android:background="@color/black"
-            android:layout_weight="25"/>
+            android:contentDescription="@string/video_imageview_desc"
+            app:layout_constraintStart_toStartOf="@+id/bottom_layout"
+            app:layout_constraintEnd_toStartOf="@+id/mic"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
         <ImageView
@@ -136,7 +175,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/mic_off"
             android:background="@color/black"
-            android:layout_weight="25" />
+            android:contentDescription="@string/mic_imageview_desc"
+            app:layout_constraintStart_toEndOf="@+id/video"
+            app:layout_constraintEnd_toStartOf="@+id/alert"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageView
             android:id="@+id/alert"
@@ -144,7 +186,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/waving_hand"
             android:background="@color/black"
-            android:layout_weight="25" />
+            android:contentDescription="@string/alert_imageview_desc"
+            app:layout_constraintStart_toEndOf="@+id/mic"
+            app:layout_constraintEnd_toStartOf="@+id/exit"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
             android:id="@+id/exit"
@@ -152,9 +197,12 @@
             android:layout_height="wrap_content"
             android:src="@drawable/end_call"
             android:background="@color/red"
-            android:layout_weight="25"
-            android:backgroundTint="#000000"/>
+            android:backgroundTint="#000000"
+            android:contentDescription="@string/exit_imageview_desc"
+            app:layout_constraintStart_toEndOf="@+id/alert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

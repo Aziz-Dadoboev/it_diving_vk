@@ -3,4 +3,13 @@
     <string name="dialog_message">Привет!</string>
     <string name="dialog_title">Уведомление</string>
     <string name="you">You</string>
+    <string name="messages_icon_desc">Open System Messages App Button</string>
+    <string name="group_icon_desc">Open Contacts Button</string>
+    <string name="shelf_icon_desc">Swap Contacts On The Screen</string>
+    <string name="video_imageview_desc">Turn Camera Off or On</string>
+    <string name="mic_imageview_desc">Turn Microphone Off or On</string>
+    <string name="alert_imageview_desc">Say Hi</string>
+    <string name="exit_imageview_desc">Close the App</string>
+    <string name="gridview_image_desc">Contact Image</string>
+    <string name="gridview_text_desc">Contact Name</string>
 </resources>
