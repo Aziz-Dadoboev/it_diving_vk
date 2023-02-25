@@ -73,7 +73,8 @@ public class ContactsActivity extends AppCompatActivity implements SelectListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTitle("Контакты");
         setContentView(R.layout.activity_contacts);
 
         recyclerView = findViewById(R.id.contacts_recyclerview);
