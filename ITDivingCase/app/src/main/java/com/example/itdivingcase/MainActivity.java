@@ -67,16 +67,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         TextView textView1 = findViewById(R.id.gridview_text);
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        LinearLayout container1 = findViewById(R.id.container1_gridview);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         ImageView imageView2 = findViewById(R.id.gridview_image2);
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         TextView textView2 = findViewById(R.id.gridview_text2);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        LinearLayout container2 = findViewById(R.id.container1_gridview2);
 
-
-        Contact contact1 = new Contact(R.drawable.legolas, "You", R.drawable.top_background, 0);
+        Contact contact1 = new Contact(R.drawable.legolas, "You", R.drawable.top_background,
+                0);
         Contact contact2 = new Contact(R.drawable.colors_palette_circle,
                 "Long Contact For Test and Test and Again and Again and Again and One More Time",
                 R.drawable.bottom_background, 1);
@@ -91,16 +87,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         drawableList = new ArrayList<>();
         Drawable videoOff = ContextCompat.getDrawable(this, R.drawable.videocam_off_new);
-        Drawable videoOn = ContextCompat.getDrawable(this, R.drawable.videocam_on_new);
         Drawable micOff = ContextCompat.getDrawable(this, R.drawable.mic_off);
-        Drawable micOn = ContextCompat.getDrawable(this, R.drawable.mic_on);
         drawableList.add(videoOff); //0
         drawableList.add(videoOff); //1
         drawableList.add(micOff); //2
         drawableList.add(micOff); //3
 
-
-        update(contactList, views);
+        update(contactList, views, drawableList);
 
         // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
         someActivityResultLauncher = registerForActivityResult(
@@ -126,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 break;
                             }
                         }
-                        views = update(contactList, views);
+                        views = update(contactList, views, drawableList);
                     }
                 });
 
@@ -211,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.shelf_icon:
                 contactList = swap(contactList);
-                views = update(contactList, views);
+                views = update(contactList, views, drawableList);
                 break;
             default:
                 finishAndRemoveTask();
@@ -225,18 +218,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return contacts;
     }
 
-    public List<View> update(List<Contact> contacts, List<View> views) {
+    public List<View> update(List<Contact> contacts, List<View> views, final List<Drawable> drawableList) {
         List<View> viewList = new ArrayList<>();
         ImageView imageView = (ImageView) views.get(0);
         TextView textView = (TextView) views.get(1);
 
         imageView.setImageResource(contacts.get(0).getImage());
         textView.setText(contacts.get(0).getName());
+
+        if (contacts.get(0).getId() == 1) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
+        } else if (drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
+        }
+
         viewList.add(imageView);
         viewList.add(textView);
 
         imageView = (ImageView) views.get(2);
         textView = (TextView) views.get(3);
+
+        if (contacts.get(1).getId() == 1) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
+        } else if (drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
+        }
 
         imageView.setImageResource(contacts.get(1).getImage());
         textView.setText(contacts.get(1).getName());

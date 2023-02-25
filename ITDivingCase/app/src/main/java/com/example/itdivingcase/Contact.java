@@ -9,7 +9,6 @@ public class Contact {
     String name;
     int backGroundColor;
     int id;
-
     public Contact(int image, String name, int backGroundColor, int id) {
         this.image = image;
         this.name = name;
