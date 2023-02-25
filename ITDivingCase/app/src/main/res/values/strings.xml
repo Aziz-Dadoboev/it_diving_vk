@@ -10,4 +10,6 @@
     <string name="mic_imageview_desc">Turn Microphone Off or On</string>
     <string name="alert_imageview_desc">Say Hi</string>
     <string name="exit_imageview_desc">Close the App</string>
+    <string name="gridview_image_desc">Contact Image</string>
+    <string name="gridview_text_desc">Contact Name</string>
 </resources>

@@ -60,7 +60,7 @@
         android:orientation="vertical"
         android:weightSum="2">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginBottom="5dp"
             android:id="@+id/container1_gridview"
             android:layout_width="match_parent"
@@ -73,9 +73,13 @@
                 android:id="@+id/gridview_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/legolas" />
+                app:srcCompat="@drawable/legolas"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/gridview_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/gridview_image_desc" />
 
             <TextView
                 android:id="@+id/gridview_text"
@@ -86,11 +90,14 @@
                 app:drawableEndCompat="@drawable/baseline_mic_off_24"
                 tools:text="TextView"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container1_gridview2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -103,8 +110,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/profile" />
+                app:srcCompat="@drawable/profile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/gridview_text2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/gridview_image_desc"/>
 
             <TextView
                 android:id="@+id/gridview_text2"
@@ -115,9 +126,12 @@
                 app:drawableEndCompat="@drawable/baseline_mic_off_24"
                 tools:text="TextView"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
