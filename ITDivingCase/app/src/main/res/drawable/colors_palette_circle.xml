@@ -1,6 +1,6 @@
-<vector android:alpha="0.89" android:height="72dp"
+<vector android:alpha="0.89" android:height="@dimen/contact_image_size"
     android:viewportHeight="362" android:viewportWidth="362"
-    android:width="72dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:width="@dimen/contact_image_size" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="#FF00FF"
         android:pathData="M208,363C199.98,363 191.96,363 183.47,362.53C183,241.71 183,121.35 183,1C191.02,1 199.04,1 207.23,1.36C212.06,2.82 216.79,3.68 221.36,5.04C229.95,7.6 238.46,10.44 246.98,13.37C246.96,13.57 246.9,13.97 246.64,14.08C246.47,14.83 246.56,15.47 246.68,16.58C246.73,124.85 246.74,232.67 246.75,340.49C246.76,342.98 246.87,345.48 246.66,348.08C246.56,348.81 246.73,349.42 246.93,350.23C246.96,350.43 247,350.83 246.66,350.99C235.29,356.56 223.35,358.72 211.44,361.06C210.22,361.3 209.14,362.33 208,363z" android:strokeColor="#00000000"/>
     <path android:fillColor="#00FF00"
