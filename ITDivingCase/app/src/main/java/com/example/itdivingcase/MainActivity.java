@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<View> views;
     List<Drawable> drawableList;
 
-    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +43,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageView contacts = findViewById(R.id.group_icon);
         ImageView table = findViewById(R.id.shelf_icon);
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         ImageView imageView1 = findViewById(R.id.gridview_image);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         TextView textView1 = findViewById(R.id.gridview_text);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         ImageView imageView2 = findViewById(R.id.gridview_image2);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         TextView textView2 = findViewById(R.id.gridview_text2);
 
         Contact contact1 = new Contact(R.drawable.legolas, "You", R.drawable.top_background,
@@ -114,82 +109,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         table.setOnClickListener(this);
     }
 
-    @SuppressLint({"NonConstantResourceId", "UseCompatLoadingForDrawables"})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.messages_icon:
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("sms:"));
-                startActivity(i);
-                break;
-            case R.id.video:
-                ImageView video = (ImageView) findViewById(R.id.video);
-                if (drawableList.get(1).getConstantState() == drawableList.get(0).getConstantState()) {
-                    video.setImageResource(R.drawable.camera_on);
-                    Log.d("MYTAG", "Video turned ON");
-                    drawableList.set(1, ContextCompat.getDrawable(this, R.drawable.camera_on));
-                } else {
-                    video.setImageResource(R.drawable.camera_off);
-                    Log.d("MYTAG", "Video turned OFF");
-                    drawableList.set(1, drawableList.get(0));
+        if (v.getId() == R.id.messages_icon) {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("sms:"));
+            startActivity(i);
+        } else if (v.getId() == R.id.video) {
+            ImageView video = (ImageView) findViewById(R.id.video);
+            if (drawableList.get(1).getConstantState() == drawableList.get(0).getConstantState()) {
+                video.setImageResource(R.drawable.camera_on);
+                Log.d("MYTAG", "Video turned ON");
+                drawableList.set(1, ContextCompat.getDrawable(this, R.drawable.camera_on));
+            } else {
+                video.setImageResource(R.drawable.camera_off);
+                Log.d("MYTAG", "Video turned OFF");
+                drawableList.set(1, drawableList.get(0));
+            }
+        } else if (v.getId() == R.id.mic) {
+            int index = 0;
+            for (int k = 0; k < contactList.size(); ++k) {
+                Contact contact = contactList.get(k);
+                if (contact.getId() == 0) {
+                    index = k;
+                    break;
                 }
-                break;
-            case R.id.mic:
-                int index = 0;
-                for (int k = 0; k < contactList.size(); ++k) {
-                    Contact contact = contactList.get(k);
-                    if (contact.getId() == 0) {
-                        index = k;
-                        break;
-                    }
+            }
+
+            ImageView mic = (ImageView) findViewById(R.id.mic);
+            TextView textView;
+            if (index == 0) {
+                textView = findViewById(R.id.gridview_text);
+            } else {
+                textView = findViewById(R.id.gridview_text2);
+            }
+
+            if (drawableList.get(3).getConstantState() == drawableList.get(2).getConstantState()) {
+                mic.setImageResource(R.drawable.mic_on);
+                drawableList.set(3, ContextCompat.getDrawable(this, R.drawable.mic_on));
+                textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                        R.drawable.baseline_mic_24, 0);
+            } else {
+                mic.setImageResource(R.drawable.mic_off);
+                textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                        R.drawable.baseline_mic_off_24, 0);
+                drawableList.set(3, drawableList.get(2));
+            }
+        } else if (v.getId() == R.id.alert) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
                 }
-
-                ImageView mic = (ImageView) findViewById(R.id.mic);
-                TextView textView;
-                if (index == 0) {
-                    textView = findViewById(R.id.gridview_text);
-                } else {
-                    textView = findViewById(R.id.gridview_text2);
-                }
-
-
-                if (drawableList.get(3).getConstantState() == drawableList.get(2).getConstantState()) {
-                    mic.setImageResource(R.drawable.mic_on);
-                    drawableList.set(3, ContextCompat.getDrawable(this, R.drawable.mic_on));
-                    textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                            R.drawable.baseline_mic_24, 0);
-                } else {
-                    mic.setImageResource(R.drawable.mic_off);
-                    textView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                            R.drawable.baseline_mic_off_24, 0);
-                    drawableList.set(3, drawableList.get(2));
-                }
-                break;
-            case R.id.alert:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                break;
-            case R.id.group_icon:
-                Intent myIntent = new Intent(MainActivity.this,
-                        ContactsActivity.class);
-                someActivityResultLauncher.launch(myIntent);
-                break;
-
-            case R.id.shelf_icon:
-                contactList = swap(contactList);
-                views = update(contactList, views, drawableList);
-                break;
-            default:
-                finishAndRemoveTask();
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else if (v.getId() == R.id.group_icon) {
+            Intent myIntent = new Intent(MainActivity.this,
+                    ContactsActivity.class);
+            someActivityResultLauncher.launch(myIntent);
+        } else if (v.getId() == R.id.shelf_icon) {
+            contactList = swap(contactList);
+            views = update(contactList, views, drawableList);
+        } else {
+            finishAndRemoveTask();
         }
     }
 
