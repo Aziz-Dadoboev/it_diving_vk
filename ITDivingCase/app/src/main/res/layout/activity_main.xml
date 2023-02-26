@@ -51,7 +51,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="@string/shelf_icon_desc"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginEnd="5dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
