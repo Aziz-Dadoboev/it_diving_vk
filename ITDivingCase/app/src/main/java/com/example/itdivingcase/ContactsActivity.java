@@ -19,19 +19,29 @@ public class ContactsActivity extends AppCompatActivity implements SelectListene
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    String[] contactNames = {"Альберто Фернандес" ,
-            "Дэвид Хёрли"};
+    String[] contactNames = {"Альберто Фернандес" , "Дэвид Хёрли", "Лула да Силва",
+            "Олаф Шольц", "Нарендра Моди", "Джоко Видодо", "Джо́рджа Мелони", "Джастин Трюдо",
+    "Си Цзинпин", "Риши Сунак", "Андрес Мануэль Лопес Обрадор", "Владимир Путин", "Джо Байден",
+    "Реджеп Тайип Эрдоган", "Эмманюэль Макрон", "Юн Сок Ёль", "Сирил Рамафоса", "Фумио Кисида",
+    "Салман ибн Абдул-Азиз Аль Сауд"};
 
-    String[] contactDescription = {"Президент Аргентины" ,
-            "Генерал-губернатор Австралии"};
+    String[] contactDescription = {"Президент Аргентины" , "Генерал-губернатор Австралии",
+            "Президент Бразилии", "Канцлер Германии", "Премьер-министр Индии",
+    "Президент Индонезии", "Премьер-министр Италии", "Премьер-министр Канады", "Председатель КНР",
+    "Премьер-министр Великобритании", "Президент Мексики", "Президент России", "Президент США",
+    "Президент Турции", "Президент Франции", "Президент Южной Кореи", "Президент ЮАР",
+    "Премьер-министр Японии", "Король Саудовской Аравии"};
 
-    int[] contactImages = {R.drawable.argentina, R.drawable.australia};
+    int[] contactImages = {R.drawable.argentina, R.drawable.australia, R.drawable.brazil,
+    R.drawable.germany, R.drawable.india, R.drawable.indonezia, R.drawable.italy,
+            R.drawable.canada, R.drawable.china, R.drawable.uk, R.drawable.mexico,
+    R.drawable.russia, R.drawable.usa, R.drawable.turkey, R.drawable.france, R.drawable.korea,
+    R.drawable.south_africa, R.drawable.japan, R.drawable.saudi_arabia};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setTitle("Контакты");
         setContentView(R.layout.activity_contacts);
 

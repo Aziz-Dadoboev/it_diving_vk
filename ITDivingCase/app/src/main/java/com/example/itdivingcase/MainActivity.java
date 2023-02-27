@@ -1,23 +1,11 @@
 package com.example.itdivingcase;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -35,18 +22,13 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.imageview.ShapeableImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
-
-
-import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityResultLauncher<Intent> someActivityResultLauncher;
@@ -75,9 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageView imageView2 = findViewById(R.id.gridview_image2);
         TextView textView2 = findViewById(R.id.gridview_text2);
         ImageView blurImage2 = (ImageView) findViewById(R.id.gridview_image2_blur);
-//        blurImage1 = blurImage(imageView1.getDrawable(), blurImage1);
-//        blurImage2 = blurImage(imageView2.getDrawable(), blurImage2);
-
 
         Contact contact1 = new Contact(R.drawable.legolas, "You",
                 0, R.drawable.top_background);
@@ -104,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawableList.add(micOff); //3
 
         views = update(contactList, views, drawableList);
-//        blurImage(R.drawable.argentina, findViewById(R.id.gridview_image2_blur));
 
         // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
         someActivityResultLauncher = registerForActivityResult(
@@ -131,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 break;
                             }
                         }
-//                        views = update(contactList, views, drawableList);
                         views = setContact(contactList, views);
                     }
                 });
@@ -221,42 +198,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return contacts;
     }
 
-//    public List<View> update(List<Contact> contacts, List<View> views, final List<Drawable> drawableList) {
-//        List<View> viewList = new ArrayList<>();
-//        ImageView imageView1 = (ImageView) views.get(0);
-//        TextView textView1 = (TextView) views.get(1);
-//        ImageView blurred1 = (ImageView) views.get(2);
-//        ImageView imageView2 = (ImageView) views.get(3);
-//        TextView textView2 = (TextView) views.get(4);
-//        ImageView blurred2 = (ImageView) views.get(5);
-//
-//        imageView1.setImageResource(contacts.get(0).getImage());
-//        textView1.setText(contacts.get(0).getName());
-//        blurImage(imageView1.getDrawable(), blurred1);
-//
-//        imageView2.setImageResource(contacts.get(1).getImage());
-//        textView2.setText(contacts.get(1).getName());
-//        blurImage(imageView2.getDrawable(), blurred2);
-//
-//        if (contacts.get(0).getId() == 1 && drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
-//            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
-//            textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
-//        } else if (drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
-//            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
-//            textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
-//        }
-//
-//        viewList.add(imageView1);
-//        viewList.add(textView1);
-//        viewList.add(blurred1);
-//
-//        viewList.add(imageView2);
-//        viewList.add(textView2);
-//        viewList.add(blurred2);
-//
-//        return viewList;
-//    }
-
     public List<View> update(List<Contact> contacts, List<View> views, final List<Drawable> drawableList) {
         ((ImageView) views.get(0)).setImageResource(contacts.get(0).getImage());
         TextView textView1 = (TextView) views.get(1);
@@ -291,24 +232,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return views;
     }
-//    public void blurImage(Drawable drawable, ImageView imageView) {
-//        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-//        Canvas canvas = new Canvas(bitmap);
-//        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-//        drawable.draw(canvas);
-//        Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-////
-////        Glide.with(this)
-////                .load(bitmap)
-////                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 3)))
-////                .into(imageView);
-//        MultiTransformation<Bitmap> transformation;
-//        transformation = new MultiTransformation<>(new BlurTransformation(25, 3),
-//                new ColorFilterTransformation(ContextCompat.getColor(this, R.color.colorDarkOverlay)));
-//        Glide.with(this).load(bitmapDrawable)
-//                .apply(RequestOptions.bitmapTransform(transformation))
-//                .into(imageView);
-//    }
 
     public void blurImage(int drawableId, ImageView image) {
         MultiTransformation<Bitmap> transformation;
