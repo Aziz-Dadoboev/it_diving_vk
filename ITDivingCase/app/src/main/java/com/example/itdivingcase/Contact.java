@@ -7,13 +7,14 @@ import android.widget.TextView;
 public class Contact {
     int image;
     String name;
-    int backGroundColor;
     int id;
-    public Contact(int image, String name, int backGroundColor, int id) {
+    int blurred;
+
+    public Contact(int image, String name, int id, int blurred) {
         this.image = image;
         this.name = name;
-        this.backGroundColor = backGroundColor;
         this.id = id;
+        this.blurred = blurred;
     }
 
     public int getImage() {
@@ -32,19 +33,18 @@ public class Contact {
         this.name = name;
     }
 
-    public int getBackGroundColor() {
-        return backGroundColor;
-    }
-
-    public void setBackGroundColor(int backGroundColor) {
-        this.backGroundColor = backGroundColor;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+    public int getBlurred() {
+        return blurred;
+    }
+
+    public void setBlurred(int blurred) {
+        this.blurred = blurred;
     }
 }

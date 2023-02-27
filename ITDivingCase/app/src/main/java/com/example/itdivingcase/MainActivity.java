@@ -1,9 +1,14 @@
 package com.example.itdivingcase;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -22,22 +27,28 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.imageview.ShapeableImageView;
+
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     List<Contact> contactList = new ArrayList<>();
     List<View> views;
@@ -59,29 +70,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ImageView imageView1 = findViewById(R.id.gridview_image);
         TextView textView1 = findViewById(R.id.gridview_text);
+        ImageView blurImage1 = (ImageView) findViewById(R.id.gridview_image_blur);
+
         ImageView imageView2 = findViewById(R.id.gridview_image2);
         TextView textView2 = findViewById(R.id.gridview_text2);
-
-        ImageView blurImage1 = findViewById(R.id.gridview_image_blur);
-        ImageView blurImage2 = findViewById(R.id.gridview_image2_blur);
+        ImageView blurImage2 = (ImageView) findViewById(R.id.gridview_image2_blur);
 //        blurImage1 = blurImage(imageView1.getDrawable(), blurImage1);
-        blurImage2 = blurImage(imageView2.getDrawable(), blurImage2);
+//        blurImage2 = blurImage(imageView2.getDrawable(), blurImage2);
 
 
-        Contact contact1 = new Contact(R.drawable.legolas, "You", R.drawable.top_background,
-                0);
+        Contact contact1 = new Contact(R.drawable.legolas, "You",
+                0, R.drawable.top_background);
         Contact contact2 = new Contact(R.drawable.colors_palette_circle,
                 "Long Contact For Test and Test and Again and Again and Again and One More Time",
-                R.drawable.bottom_background, 1);
+                1, R.drawable.bottom_background);
         contactList.add(contact1);
         contactList.add(contact2);
 
         views = new ArrayList<>();
         views.add(imageView1); //0
         views.add(textView1); //1
-        views.add(imageView2); //2
-        views.add(textView2); //3
-        views.add(blurImage1); //4
+        views.add(blurImage1); //2
+        views.add(imageView2); //3
+        views.add(textView2); //4
         views.add(blurImage2); //5
 
         drawableList = new ArrayList<>();
@@ -92,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawableList.add(micOff); //2
         drawableList.add(micOff); //3
 
-        update(contactList, views, drawableList);
+        views = update(contactList, views, drawableList);
 //        blurImage(R.drawable.argentina, findViewById(R.id.gridview_image2_blur));
 
         // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
@@ -115,11 +126,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (contact.getId() == 1) {
                                 contact.setImage(image);
                                 contact.setName(name);
+                                contact.setBlurred(image);
                                 contactList.set(i, contact);
                                 break;
                             }
                         }
-                        views = update(contactList, views, drawableList);
+//                        views = update(contactList, views, drawableList);
+                        views = setContact(contactList, views);
                     }
                 });
 
@@ -208,67 +221,103 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return contacts;
     }
 
+//    public List<View> update(List<Contact> contacts, List<View> views, final List<Drawable> drawableList) {
+//        List<View> viewList = new ArrayList<>();
+//        ImageView imageView1 = (ImageView) views.get(0);
+//        TextView textView1 = (TextView) views.get(1);
+//        ImageView blurred1 = (ImageView) views.get(2);
+//        ImageView imageView2 = (ImageView) views.get(3);
+//        TextView textView2 = (TextView) views.get(4);
+//        ImageView blurred2 = (ImageView) views.get(5);
+//
+//        imageView1.setImageResource(contacts.get(0).getImage());
+//        textView1.setText(contacts.get(0).getName());
+//        blurImage(imageView1.getDrawable(), blurred1);
+//
+//        imageView2.setImageResource(contacts.get(1).getImage());
+//        textView2.setText(contacts.get(1).getName());
+//        blurImage(imageView2.getDrawable(), blurred2);
+//
+//        if (contacts.get(0).getId() == 1 && drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
+//            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
+//            textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
+//        } else if (drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
+//            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
+//            textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
+//        }
+//
+//        viewList.add(imageView1);
+//        viewList.add(textView1);
+//        viewList.add(blurred1);
+//
+//        viewList.add(imageView2);
+//        viewList.add(textView2);
+//        viewList.add(blurred2);
+//
+//        return viewList;
+//    }
+
     public List<View> update(List<Contact> contacts, List<View> views, final List<Drawable> drawableList) {
-        List<View> viewList = new ArrayList<>();
-        ImageView imageView = (ImageView) views.get(0);
-        TextView textView = (TextView) views.get(1);
+        ((ImageView) views.get(0)).setImageResource(contacts.get(0).getImage());
+        TextView textView1 = (TextView) views.get(1);
+        textView1.setText(contacts.get(0).getName());
+        blurImage(contacts.get(0).getBlurred(), (ImageView) views.get(2));
 
-        imageView.setImageResource(contacts.get(0).getImage());
-        textView.setText(contacts.get(0).getName());
+        ((ImageView) views.get(3)).setImageResource(contacts.get(1).getImage());
+        TextView textView2 = (TextView) views.get(4);
+        textView2.setText(contacts.get(1).getName());
+        blurImage(contacts.get(1).getBlurred(), ((ImageView) views.get(5)));
 
-        if (contacts.get(0).getId() == 1) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
+        if (contacts.get(0).getId() == 1 && drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
+            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
+            textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
         } else if (drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
+            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
+            textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
         }
 
-        viewList.add(imageView);
-        viewList.add(textView);
-
-        imageView = (ImageView) views.get(2);
-        textView = (TextView) views.get(3);
-
-        if (contacts.get(1).getId() == 1) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_off_24, 0);
-        } else if (drawableList.get(2).getConstantState() != drawableList.get(3).getConstantState()) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_mic_24, 0);
-        }
-
-        imageView.setImageResource(contacts.get(1).getImage());
-        textView.setText(contacts.get(1).getName());
-        viewList.add(imageView);
-        viewList.add(textView);
-
-        return viewList;
+        return views;
     }
 
-//    public ImageView blurImage(Drawable drawable, ImageView imageView) {
+    public List<View> setContact(final List<Contact> contacts, List<View> views) {
+        for (int i = 0; i < contacts.size(); ++i) {
+            if (contacts.get(i).getId() == 1) {
+                int index = i * (i+2);
+                Log.d("MYTAG", "i: " + i + " index: " + index);
+                ((ImageView) views.get(index)).setImageResource(contacts.get(i).getImage());
+                ((TextView) views.get(index+1)).setText(contacts.get(i).getName());
+                blurImage(contacts.get(i).getImage(), ((ImageView) views.get(index+2)));
+            }
+        }
+        return views;
+    }
+//    public void blurImage(Drawable drawable, ImageView imageView) {
 //        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 //        Canvas canvas = new Canvas(bitmap);
 //        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
 //        drawable.draw(canvas);
 //        Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-//
-//        Glide.with(this)
-//                .load(bitmap)
-//                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 3)))
+////
+////        Glide.with(this)
+////                .load(bitmap)
+////                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 3)))
+////                .into(imageView);
+//        MultiTransformation<Bitmap> transformation;
+//        transformation = new MultiTransformation<>(new BlurTransformation(25, 3),
+//                new ColorFilterTransformation(ContextCompat.getColor(this, R.color.colorDarkOverlay)));
+//        Glide.with(this).load(bitmapDrawable)
+//                .apply(RequestOptions.bitmapTransform(transformation))
 //                .into(imageView);
-//
-//        return imageView;
 //    }
 
-    public ImageView blurImage(Drawable drawableId, ImageView image) {
-
-//        Glide.with(this).load(drawableId)
-//                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 3)))
-//                .into(image);
+    public void blurImage(int drawableId, ImageView image) {
         MultiTransformation<Bitmap> transformation;
         transformation = new MultiTransformation<>(new BlurTransformation(25, 3),
                 new ColorFilterTransformation(ContextCompat.getColor(this, R.color.colorDarkOverlay)));
         Glide.with(this).load(drawableId)
-                .apply(RequestOptions.bitmapTransform(transformation))
+                .apply(RequestOptions.bitmapTransform(transformation)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(image);
-        return image;
     }
 
 }
