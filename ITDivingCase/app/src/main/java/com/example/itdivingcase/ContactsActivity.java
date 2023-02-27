@@ -19,61 +19,29 @@ public class ContactsActivity extends AppCompatActivity implements SelectListene
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    String[] contactNames = {"Карпова Лада Савельевна" ,
-            "Галкин Тихон Арсентьевич" ,
-            "Фокина Вера Давидовна" ,
-            "Одинцова Мария Мироновна" ,
-            "Семенова Василиса Робертовна" ,
-            "Баранова Екатерина Артёмовна" ,
-            "Моисеев Роберт Викторович" ,
-            "Кожевников Владислав Дмитриевич" ,
-            "Кольцова Яна Сергеевна" ,
-            "Ефимова Анастасия Лукинична" ,
-            "Петров Максим Ростиславович" ,
-            "Соловьева Елизавета Ивановна" ,
-            "Орлов Глеб Григорьевич" ,
-            "Денисова Полина Дмитриевна" ,
-            "Лазарева София Ивановна" ,
-            "Троицкий Леон Романович" ,
-            "Коновалова Мария Львовна" ,
-            "Колесникова Елена Владиславовна" ,
-            "Осипов Дмитрий Владимирович" ,
-            "Емельянов Георгий Евгеньевич"};
+    String[] contactNames = {"Альберто Фернандес" , "Дэвид Хёрли", "Лула да Силва",
+            "Олаф Шольц", "Нарендра Моди", "Джоко Видодо", "Джо́рджа Мелони", "Джастин Трюдо",
+    "Си Цзинпин", "Риши Сунак", "Андрес Мануэль Лопес Обрадор", "Владимир Путин", "Джо Байден",
+    "Реджеп Тайип Эрдоган", "Эмманюэль Макрон", "Юн Сок Ёль", "Сирил Рамафоса", "Фумио Кисида",
+    "Салман ибн Абдул-Азиз Аль Сауд"};
 
-    String[] contactNumbers = {"7(673)508-04-65644" ,
-            "423(20)631-29-83759" ,
-            "80(89)266-90-07430" ,
-            "50(13)333-70-87468" ,
-            "57(832)324-75-53056" ,
-            "8(51)322-06-98155" ,
-            "389(21)971-28-68059" ,
-            "74(9795)772-34-52374" ,
-            "34(461)526-57-39626" ,
-            "83(567)293-94-93827" ,
-            "48(65)485-11-27961" ,
-            "29(498)387-11-56537" ,
-            "9(689)926-98-84179" ,
-            "68(06)173-83-75569" ,
-            "4(0406)957-02-76957" ,
-            "151(8925)824-07-21138" ,
-            "23(26)954-65-62651" ,
-            "87(69)668-88-16239" ,
-            "65(618)645-39-60742" ,
-            "38(06)885-12-45809"};
+    String[] contactDescription = {"Президент Аргентины" , "Генерал-губернатор Австралии",
+            "Президент Бразилии", "Канцлер Германии", "Премьер-министр Индии",
+    "Президент Индонезии", "Премьер-министр Италии", "Премьер-министр Канады", "Председатель КНР",
+    "Премьер-министр Великобритании", "Президент Мексики", "Президент России", "Президент США",
+    "Президент Турции", "Президент Франции", "Президент Южной Кореи", "Президент ЮАР",
+    "Премьер-министр Японии", "Король Саудовской Аравии"};
 
-    int[] contactImages = {R.drawable.anonymous_mask_01, R.drawable.bmo_02,
-            R.drawable.dipper_pines_03, R.drawable.finn_04, R.drawable.flame_princess_05,
-            R.drawable.genie_06, R.drawable.grinch_07, R.drawable.gunter_08,
-            R.drawable.hello_kitty_09, R.drawable.ice_king_10, R.drawable.iron_man_11,
-            R.drawable.jake_12, R.drawable.joker_suicide_squad_13, R.drawable.kermit_the_frog_14,
-            R.drawable.lumpy_space_princess_15, R.drawable.mabel_pines_16, R.drawable.my_melody_17,
-            R.drawable.smurf_18, R.drawable.super_mario_19, R.drawable.walter_white_20};
+    int[] contactImages = {R.drawable.argentina, R.drawable.australia, R.drawable.brazil,
+    R.drawable.germany, R.drawable.india, R.drawable.indonezia, R.drawable.italy,
+            R.drawable.canada, R.drawable.china, R.drawable.uk, R.drawable.mexico,
+    R.drawable.russia, R.drawable.usa, R.drawable.turkey, R.drawable.france, R.drawable.korea,
+    R.drawable.south_africa, R.drawable.japan, R.drawable.saudi_arabia};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setTitle("Контакты");
         setContentView(R.layout.activity_contacts);
 
@@ -84,9 +52,8 @@ public class ContactsActivity extends AppCompatActivity implements SelectListene
 
         List<Person> contacts = new ArrayList<>();
         for (int i = 0; i < contactNames.length; ++i) {
-            Person person = new Person(contactNames[i], contactNumbers[i], contactImages[i]);
+            Person person = new Person(contactNames[i], contactDescription[i], contactImages[i]);
             contacts.add(person);
-//            Log.d("MYTAG", contacts.get(i).getName());
         }
         ContactsAdapter contactsAdapter = new ContactsAdapter(this, contacts, this);
         recyclerView.setAdapter(contactsAdapter);

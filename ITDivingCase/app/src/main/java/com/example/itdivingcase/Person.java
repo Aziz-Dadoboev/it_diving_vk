@@ -2,12 +2,12 @@ package com.example.itdivingcase;
 
 public class Person {
     private String name;
-    private String number;
+    private String description;
     private int image;
 
-    public Person(String name, String number, int image) {
+    public Person(String name, String description, int image) {
         this.name = name;
-        this.number = number;
+        this.description = description;
         this.image = image;
     }
 
@@ -15,8 +15,8 @@ public class Person {
         this.name = name;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setImage(int image) {
@@ -27,8 +27,8 @@ public class Person {
         return name;
     }
 
-    public String getNumber() {
-        return number;
+    public String getDescription() {
+        return description;
     }
 
     public int getImage() {

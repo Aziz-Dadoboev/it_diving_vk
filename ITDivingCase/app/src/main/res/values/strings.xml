@@ -12,4 +12,7 @@
     <string name="exit_imageview_desc">Close the App</string>
     <string name="gridview_image_desc">Contact Image</string>
     <string name="gridview_text_desc">Contact Name</string>
+    <string name="contact_activity_name_text">Name</string>
+    <string name="contact_activity_desc_text">Description</string>
+    <string name="contact_activity_pic">Contact Picture</string>
 </resources>
