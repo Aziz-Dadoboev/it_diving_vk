@@ -39,7 +39,7 @@
 
 ## Результат
 
-APK: https://github.com/Aziz-Dadoboev/it_diving_vk/blob/main/ITDivingCase/apk/ITDiving.apk?raw=true
+APK: https://github.com/Aziz-Dadoboev/it_diving_vk/raw/main/ITDivingCase/apk/ITDiving.apk
 
 ### Главный экран
 <img src="https://github.com/Aziz-Dadoboev/it_diving_vk/blob/main/ITDivingCase/screens/1.png"  width="300" height="600">
