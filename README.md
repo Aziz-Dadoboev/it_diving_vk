@@ -4,7 +4,9 @@
 
 ## Задание
 Сверстать экран:
-![экран](https://cloud.mail.ru/public/KUnX/6RBF49Rnt)
+
+<img src="https://github.com/Aziz-Dadoboev/it_diving_vk/blob/main/ITDivingCase/screens/call_screen.png" width="300" height="600">
+
 Минимальная версия Android - API 23 (6.0)
 ### Нижняя часть экрана
  - По клику на кнопку с иконкой камеры происходит замена иконки на камеру / зачеркнутую камеру (понадобится 2 иконки камеры) 
@@ -36,6 +38,8 @@
 
 
 ## Результат
+
+APK: https://github.com/Aziz-Dadoboev/it_diving_vk/blob/main/ITDivingCase/apk/ITDiving.apk
 
 ### Главный экран
 <img src="https://github.com/Aziz-Dadoboev/it_diving_vk/blob/main/ITDivingCase/screens/1.png"  width="300" height="600">
