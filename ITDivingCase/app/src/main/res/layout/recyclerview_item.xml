@@ -18,6 +18,7 @@
             android:id="@+id/profile_photo"
             android:layout_width="@dimen/contact_image_size"
             android:layout_height="@dimen/contact_image_size"
+            app:layout_goneMarginStart="@dimen/margin_for_contact_containers"
             tools:srcCompat="@tools:sample/avatars"
             android:contentDescription="@string/contact_activity_pic"
             android:scaleType="centerCrop"
@@ -29,7 +30,7 @@
 
         <LinearLayout
             android:id="@+id/name_desc_ll"
-            android:layout_width="275dp"
+            android:layout_width="265dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
