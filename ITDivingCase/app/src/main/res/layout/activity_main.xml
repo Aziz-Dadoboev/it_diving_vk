@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="@string/messages_icon_desc"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginStart="5dp"/>
 
         <ImageView
             android:id="@+id/group_icon"

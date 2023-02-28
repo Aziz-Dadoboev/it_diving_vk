@@ -129,14 +129,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i.setData(Uri.parse("sms:"));
             startActivity(i);
         } else if (v.getId() == R.id.video) {
-            ImageView video = (ImageView) findViewById(R.id.video);
+            ImageView video = findViewById(R.id.video);
             if (drawableList.get(1).getConstantState() == drawableList.get(0).getConstantState()) {
                 video.setImageResource(R.drawable.camera_on);
-                Log.d("MYTAG", "Video turned ON");
                 drawableList.set(1, ContextCompat.getDrawable(this, R.drawable.camera_on));
             } else {
                 video.setImageResource(R.drawable.camera_off);
-                Log.d("MYTAG", "Video turned OFF");
                 drawableList.set(1, drawableList.get(0));
             }
         } else if (v.getId() == R.id.mic) {
@@ -149,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
-            ImageView mic = (ImageView) findViewById(R.id.mic);
+            ImageView mic = findViewById(R.id.mic);
             TextView textView;
             if (index == 0) {
                 textView = findViewById(R.id.gridview_text);
@@ -171,12 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.alert) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setPositiveButton("Ok", (dialog, which) -> dialog.cancel());
             AlertDialog alert = builder.create();
             alert.show();
         } else if (v.getId() == R.id.group_icon) {
